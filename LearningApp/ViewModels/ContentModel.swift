@@ -10,7 +10,16 @@ import Foundation
 class ContentModel: ObservableObject {
     
     @Published var modules = [Module]()
+    @Published var currentModule: Module?
+    var currentModuleIndex = 0
+    @Published var currentLesson: Lesson?
+    var currentLessonIndex = 0
+    @Published var lessonDescription = NSAttributedString()
+    @Published var currentContentSelected:Int?
+    
     var styleData: Data?
+    
+    
     
     init() {
         
@@ -19,34 +28,106 @@ class ContentModel: ObservableObject {
     }
     
     func getLocalData() {
+    
+    let jsonUrl = Bundle.main.url(forResource: "data", withExtension: "json")
+    
+    do {
+        let jsonData = try Data(contentsOf: jsonUrl!)
         
-        let jsonUrl = Bundle.main.url(forResource: "data", withExtension: "json")
+        let jsonDecoder = JSONDecoder()
         
-        do {
-            let jsonData = try Data(contentsOf: jsonUrl!)
+        let modules = try jsonDecoder.decode([Module].self, from: jsonData)
+        
+        self.modules = modules
+        
+    }
+    catch {
+        print("Couldn't parse local data")
+    }
+    
+    let styleUrl = Bundle.main.url(forResource: "style", withExtension: "html")
+    
+    do {
+        let styleData = try Data(contentsOf: styleUrl!)
+        
+        self.styleData = styleData
+        
+    }
+    catch {
+        print("Couldn't parse style data")
+    }
+}
+    
+    func beginModule(_ moduleid:Int) {
+        
+        for index in 0..<modules.count {
             
-            let jsonDecoder = JSONDecoder()
+            if modules[index].id == moduleid {
+                currentModuleIndex = index
+                break
+            }
+        }
+        
+        currentModule = modules[currentModuleIndex]
+    }
+    
+    func beginLesson(_ lessonIndex:Int) {
+        
+        if lessonIndex < currentModule!.content.lessons.count {
             
-            let modules = try jsonDecoder.decode([Module].self, from: jsonData)
-            
-            self.modules = modules
+            currentLessonIndex = lessonIndex
             
         }
-        catch {
-            print("Couldn't parse local data")
+        else {
+            currentLessonIndex = 0
         }
         
-        let styleUrl = Bundle.main.url(forResource: "style", withExtension: "html")
+        currentLesson = currentModule?.content.lessons[currentLessonIndex]
+        lessonDescription = addStyling(currentLesson!.explanation)
         
-        do {
-            let styleData = try Data(contentsOf: styleUrl!)
+    }
+    
+    func nextLesson() {
+        currentLessonIndex += 1
+        
+        if currentLessonIndex < currentModule!.content.lessons.count {
+            currentLesson = currentModule!.content.lessons[currentLessonIndex]
+            lessonDescription = addStyling(currentLesson!.explanation)
+        }
+        else {
+            currentLesson = nil
+            currentLessonIndex = 0
+        }
+        
+    }
+    
+    func hasNextLesson() -> Bool {
+        
+        if currentLessonIndex + 1 < currentModule!.content.lessons.count {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    private func addStyling(_ htmlString:String) -> NSAttributedString {
+        
+        var resultString = NSAttributedString()
+        var data = Data()
+        if styleData != nil {
+            data.append(self.styleData!)
+        }
+        
+        data.append(Data(htmlString.utf8))
+        
+        if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
             
-            self.styleData = styleData
+            resultString = attributedString
             
         }
-        catch {
-            print("Couldn't parse style data")
-        }
+
+        return resultString
         
     }
     
