@@ -23,6 +23,7 @@
 		BA69D04E2692505900694399 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA69D04D2692505900694399 /* Constants.swift */; };
 		BA6F4D07269B105C00448875 /* CodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6F4D06269B105C00448875 /* CodeTextView.swift */; };
 		BA6F4D26269B669A00448875 /* RectangleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6F4D25269B669A00448875 /* RectangleCard.swift */; };
+		BA6F4D57269B91CD00448875 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6F4D56269B91CD00448875 /* TestView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		BA69D04D2692505900694399 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BA6F4D06269B105C00448875 /* CodeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeTextView.swift; sourceTree = "<group>"; };
 		BA6F4D25269B669A00448875 /* RectangleCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleCard.swift; sourceTree = "<group>"; };
+		BA6F4D56269B91CD00448875 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				BA69D046269247AA00694399 /* ContentViewRow.swift */,
 				BA69D04826924A4E00694399 /* ContentDetailView.swift */,
 				BA6F4D06269B105C00448875 /* CodeTextView.swift */,
+				BA6F4D56269B91CD00448875 /* TestView.swift */,
 				BA6F4D25269B669A00448875 /* RectangleCard.swift */,
 			);
 			path = Views;
@@ -225,6 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA6F4D57269B91CD00448875 /* TestView.swift in Sources */,
 				BA4C4C90268FDF5000403E1D /* HomeView.swift in Sources */,
 				BA69D043269234F300694399 /* HomeViewRow.swift in Sources */,
 				BA6F4D26269B669A00448875 /* RectangleCard.swift in Sources */,
